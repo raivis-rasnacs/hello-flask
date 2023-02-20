@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block secondary_contents %}
+<ul>
+    <li>
+        <a href="/new-student">
+            <button class="btn btn-primary">
+                Add student
+            </button>
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block contents %}
+    <table class="table table-primary table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Class</th>
+            </tr>
+        </thead>
+        {% for item in data %}
+        <tr>
+            {% for field in item %}
+            <td>{{ item[field] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+ {% endblock %}
