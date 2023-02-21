@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block contents %}
+<form action="/students" method="POST">
+    <input class="form-control" name="student_name" type="text"><br>
+    <input class="form-control" name="student_class" type="text"><br>
+    <input class="form-control" type="submit">
+</form>
+{% endblock %}
