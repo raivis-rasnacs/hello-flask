@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block contents %}
+    <form action="/new-author" method="POST">
+        <input class="form-control" 
+            type="text" 
+            name="vards" 
+            id="vards_input"
+            placeholder="Ievadi vārdu">
+        <input class="form-control" 
+            type="text" 
+            name="uzvards" 
+            id="uzvards_input"
+            placeholder="Ievadi uzvārdu">
+        <input class="form-control" 
+            type="text" 
+            name="dz_gads" 
+            id="dz_gads_input"
+            placeholder="Ievadi dzimšanas gadu">
+        <input class="btn btn-primary" type="submit">
+    </form>
+{% endblock %}

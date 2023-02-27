@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block secondary_contents %}
+    <ul>
+        <li>
+            <a href="/new-book">
+                <button class="btn btn-primary">
+                    Add book
+                </button>
+            </a>
+        </li>
+        <li>
+            <a href="/new-author">
+                <button class="btn btn-primary">
+                    Add author
+                </button>
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block contents %}
+    <table class="table">
+    <thead>
+        <tr>
+            <th>ISBN kods</th>
+            <th>Nosaukums</th>
+            <th>Valoda</th>
+            <th>Lpp skaits</th>
+            <th>Izdošanas gads</th>
+            <th>Autors</th>
+        </tr>
+    </thead>
+        {% for book in data %}
+            <tr>
+                {% for field in book[1:] %}
+                    <td>{{ field }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block contents %}
+    <form action="/new-book" method="POST">
+        <input class="form-control" 
+            type="text" 
+            name="isbn" 
+            id="isbn_input"
+            placeholder="Ievadi ISBN kodu">
+        <input class="form-control" 
+            type="text" 
+            name="nosaukums" 
+            id="nosaukums_input"
+            placeholder="Ievadi nosaukumu!">
+        <input class="form-control" 
+            type="text" 
+            name="valoda" 
+            id="valoda_input"
+            placeholder="Ievadi valodu!">
+        <input class="form-control" 
+            type="text" 
+            name="lpp_skaits" 
+            id="lpp_skaits_input"
+            placeholder="Ievadi lappušu skaitu!">
+        <input class="form-control" 
+        type="text" 
+        name="izd_gads" 
+        id="izd_gads_input"
+        placeholder="Ievadi izdošanas gadu!">
+        <select class="form-control" name="autors" id="autors_input">
+            {% for autors in data %}
+                <option value="{{ autors[0] }}">{{ autors[1] }} {{ autors[2] }}</option>
+            {% endfor %}
+        </select>
+        <input class="btn btn-outline-primary" type="submit">
+    </form>
+{% endblock %}
