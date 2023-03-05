@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block contents %}
+    <form action="/login" method="post">
+        <input class="form-control" type="text" name="lietotajvards" id="lietotajvards_input">
+        <input class="form-control" type="password" name="parole" id="parole_input">
+        <input class="btn btn-primary" type="submit" value="Ieiet">
+    </form>
+{% endblock %}

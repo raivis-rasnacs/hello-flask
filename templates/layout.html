@@ -18,10 +18,15 @@
         <div class="row">
             <div class="col-12">
                 <nav class="nav">
+                {% if session["user_id"] %}
                     <a class="nav-link" href="/">Sākums</a>
                     <a class="nav-link" href="/greeting">Sveiciens</a>
                     <a class="nav-link" href="/students">Studenti</a>
                     <a class="nav-link" href="/books">Grāmatu plaukts</a>
+                    <a class="nav-link" href="/logout">Iziet</a>
+                {% else %}
+                    <a class="nav-link" href="/register">Reģistrēties</a>
+                {% endif %}
                 </nav>
             </div>
         </div>

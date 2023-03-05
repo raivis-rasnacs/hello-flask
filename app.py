@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 from helpers import error_page
 from uuid import uuid4
 import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash
 
 con = sqlite3.connect("gramatas.db", check_same_thread=False)
 cur = con.cursor()
@@ -10,10 +11,50 @@ app = Flask(__name__,
             static_url_path="/static",
             static_folder="static")
 
+app.config["SECRET_KEY"] = str(uuid4().hex)
 app.register_error_handler(404, error_page)
+
+@app.route("/logout")
+def logout():
+    session["user_id"] = None
+    return redirect(url_for("login"))
+
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    if request.method == "POST":
+        lietotajvards = request.form["lietotajvards"]
+        parole = request.form["parole"]
+        res = cur.execute("SELECT * FROM lietotaji WHERE lietotajvards == ?", (lietotajvards, ))
+        lietotajs = res.fetchall()
+        if len(lietotajs) > 0:
+            print(lietotajs[0][2])
+            if check_password_hash(lietotajs[0][2], parole):
+                session["user_id"] = lietotajs[0][0]
+                return redirect(url_for("index"))
+            else:
+                flash("Nepareizi dati!")
+                return redirect(url_for("login"))
+    return render_template("login.html")
+
+@app.route("/register", methods=["POST", "GET"])
+def register():
+    if request.method == "POST":
+        lietotajvards = request.form["lietotajvards"]
+        parole = request.form["parole"]
+        parole_atkartota = request.form["parole_velreiz"]
+        if parole == parole_atkartota:
+            sql = '''INSERT INTO lietotaji 
+                    VALUES (?, ?, ?)'''
+            cur.execute(sql, (str(uuid4()), lietotajvards, generate_password_hash(parole)))
+            con.commit()
+            flash("Lietotājs izveidots!")
+            return redirect(url_for("login"))
+    return render_template("register.html")
 
 @app.route("/")
 def index():
+    if not session.setdefault("user_id"):
+        return render_template("login.html")
     return render_template("index.html")
 
 @app.route("/greeting")
